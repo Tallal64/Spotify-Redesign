@@ -2,7 +2,7 @@ import Logo from "/Spotify_Logo_RGB_Green.png";
 
 const Login = () => {
   const handleClick = () => {
-    const client_id = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+    const client_id = import.meta.env.VITE_SPOTIFY_CLIENT_ID.trim();
     const redirect_uri =
       import.meta.env.MODE === "development"
         ? import.meta.env.VITE_SPOTIFY_REDIRECT_URI_LOCAL.trim()
