@@ -14,16 +14,34 @@ export const spotifyApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    getCurrentUserProfileData: builder.query({
+      query: () => `me`,
+    }),
     getCurrentUserPlaylist: builder.query({
       query: () => `me/playlists/`,
     }),
-    getCurrentUserProfileData: builder.query({
-      query: () => `me`,
+    getTrackFromPlaylist: builder.query({
+      query: (trackId) => `playlists/${trackId}/tracks`, // this links is taken from playlist>tracks>id
+    }),
+    getRecommendedSongs: builder.query({
+      query: (recommendedSongsId) =>
+        `recommendations?limit=5&seed_tracks=${recommendedSongsId}`,
+    }),
+    getRecommendedArtists: builder.query({
+      query: (artistsId) => `artists/${artistsId}/related-artists`,
+    }),
+    getUserLikedSongs: builder.query({
+      query: () => `me/tracks/`,
     }),
   }),
 });
 
 export const {
-  useGetCurrentUserPlaylistQuery,
   useGetCurrentUserProfileDataQuery,
+  useGetCurrentUserPlaylistQuery,
+  useGetTrackFromPlaylistQuery,
+  useGetArtistFromTracksQuery,
+  useGetRecommendedSongsQuery,
+  useGetRecommendedArtistsQuery,
+  useGetUserLikedSongsQuery,
 } = spotifyApi;

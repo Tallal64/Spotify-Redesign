@@ -4,8 +4,8 @@ import { FiSearch } from "react-icons/fi";
 import { TfiArrowLeft, TfiArrowRight } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { setUserData } from "../../redux/feature/spotifySlice";
-import { useGetCurrentUserProfileDataQuery } from "../../redux/services/spotify";
+import { setUserData } from "../redux/feature/spotifySlice";
+import { useGetCurrentUserProfileDataQuery } from "../redux/services/spotify";
 
 const Header = () => {
   const userProfileData = useSelector((state) => state.spotify.userProfileData);
@@ -46,7 +46,7 @@ const Header = () => {
   }, [data, dispatch, error, isLoading, userProfileData]);
 
   return (
-    <div className="bg-Accent-800 pt-7 pr-10 pl-4">
+    <div className="bg-Accent-800 pt-7 px-8">
       {/* upperHeader */}
       <div className="flex justify-between items-center">
         <div className="w-full">

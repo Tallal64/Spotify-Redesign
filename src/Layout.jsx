@@ -3,10 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import Header from "./components/custom/Header";
-import Sidebar from "./components/custom/Sidebar";
 import { Login } from "./pages";
 import { setToken } from "./redux/feature/spotifySlice";
+import { Header, Sidebar } from "./components";
 
 function Layout() {
   const [profile, setProfile] = useState("");

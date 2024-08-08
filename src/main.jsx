@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import {
+  MemoryRouter,
   createBrowserRouter,
   createRoutesFromElements,
   Route,
@@ -20,10 +22,10 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="home" element={<Home />}>
-        <Route path="music" element={<Music />} />
-        <Route path="audiobooks" element={<Audiobooks />} />
-        <Route path="artists" element={<Artists />} />
-        <Route path="albums" element={<Albums />} />
+        <Route path=":id" element={<Audiobooks />} />
+        <Route path=":id" element={<Music />} />
+        <Route path=":id" element={<Artists />} />
+        <Route path=":id" element={<Albums />} />
       </Route>
       <Route path="login" element={<Login />} />
       <Route path="discover" element={<Discover />} />
