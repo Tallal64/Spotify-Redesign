@@ -8,7 +8,14 @@ const Login = () => {
         ? import.meta.env.VITE_SPOTIFY_REDIRECT_URI_LOCAL.trim()
         : import.meta.env.VITE_SPOTIFY_REDIRECT_URI_PROD.trim();
     const Url = "https://accounts.spotify.com/authorize?";
-    const scope = "user-read-email user-read-private";
+    const scope = [
+      "user-read-email",
+      "user-read-private",
+      "user-library-read",
+      "user-follow-read",
+      "playlist-read-private",
+      "playlist-read-collaborative",
+    ];
 
     const params = new URLSearchParams({
       response_type: "token",
