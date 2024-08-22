@@ -69,7 +69,7 @@ function Layout() {
           <div className="ml-[300px]">
             <Header />
           </div>
-          <div className="bg-[#03150b] h-screen ml-[300px]">
+          <div className="bg-[#03150b] min-h-screen ml-[300px]">
             <Outlet />
           </div>
         </div>

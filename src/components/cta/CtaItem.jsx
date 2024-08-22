@@ -3,7 +3,7 @@
 const CtaItem = ({ title, desc, img }) => {
   return (
     <div
-      className={`cursor-pointer flex p-[30px] rounded-[10px] bg-white/5 min-w-[430px] min-h-[147px]`}
+      className={`cursor-pointer flex p-[30px] rounded-[10px] bg-white/5 min-w-[430px] min-h-[147px] max-w-[430px] max-h-[147]`}
     >
       <div className="flex w-full gap-[30px]">
         {/* img */}
@@ -12,7 +12,9 @@ const CtaItem = ({ title, desc, img }) => {
             <img
               src={img}
               alt="img"
-              className={`rounded-[10px] w-full h-full object-cover`}
+              className={`rounded-[10px]`}
+              height={100}
+              width={100}
             />
           </div>
         </div>

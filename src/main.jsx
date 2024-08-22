@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import {
-  MemoryRouter,
   createBrowserRouter,
   createRoutesFromElements,
   Route,
@@ -12,10 +10,15 @@ import {
 import "./index.css";
 import Layout from "./Layout.jsx";
 import Albums from "./pages/Albums.jsx";
-import Artists from "./pages/Artists.jsx";
 import Audiobooks from "./pages/Audiobooks.jsx";
-import { Discover, Home, LikedSongs, Login } from "./pages/index.js";
-import Music from "./pages/Music.jsx";
+import {
+  FollowedArtists,
+  Home,
+  Login,
+  RecommendedArtists,
+  RecommendedMusic,
+  SavedSongs
+} from "./pages/index.js";
 import { store } from "./redux/store.js";
 
 const router = createBrowserRouter(
@@ -23,13 +26,13 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route path="home" element={<Home />}>
         <Route path=":id" element={<Audiobooks />} />
-        <Route path=":id" element={<Music />} />
-        <Route path=":id" element={<Artists />} />
+        <Route path=":id" element={<RecommendedMusic />} />
+        <Route path=":id" element={<RecommendedArtists />} />
         <Route path=":id" element={<Albums />} />
       </Route>
       <Route path="login" element={<Login />} />
-      <Route path="discover" element={<Discover />} />
-      <Route path="liked" element={<LikedSongs />} />
+      <Route path="followed" element={<FollowedArtists />} />
+      <Route path="saved" element={<SavedSongs />} />
     </Route>
   )
 );

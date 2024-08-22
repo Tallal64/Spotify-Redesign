@@ -14,7 +14,7 @@ export const spotifyApi = createApi({
   }),
 
   endpoints: (builder) => ({
-    getCurrentUserProfileData: builder.query({
+    getCurrentUserData: builder.query({
       query: () => `me`,
     }),
     getCurrentUserPlaylist: builder.query({
@@ -28,20 +28,30 @@ export const spotifyApi = createApi({
         `recommendations?limit=5&seed_tracks=${recommendedSongsId}`,
     }),
     getRecommendedArtists: builder.query({
-      query: (artistsId) => `artists/${artistsId}/related-artists`,
+      query: (recommendedArtistsId) =>
+        `artists/${recommendedArtistsId}/related-artists`,
     }),
-    getUserLikedSongs: builder.query({
-      query: () => `me/tracks/`,
+    getCurrentUserFollowedArtists: builder.query({
+      query: () => `me/following?type=artist&limit=50`,
+    }),
+    getUserSavedSongs: builder.query({
+      query: () => `me/tracks?limit=50`,
+    }),
+    getBrowseCategories: builder.query({
+      query: () => `browse/categories`,
     }),
   }),
 });
 
 export const {
-  useGetCurrentUserProfileDataQuery,
+  useGetCurrentUserDataQuery,
   useGetCurrentUserPlaylistQuery,
   useGetTrackFromPlaylistQuery,
   useGetArtistFromTracksQuery,
   useGetRecommendedSongsQuery,
   useGetRecommendedArtistsQuery,
-  useGetUserLikedSongsQuery,
+  useGetArtist,
+  useGetCurrentUserFollowedArtistsQuery,
+  useGetUserSavedSongsQuery,
+  useGetBrowseCategoriesQuery,
 } = spotifyApi;

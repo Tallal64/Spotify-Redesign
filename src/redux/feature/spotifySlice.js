@@ -2,11 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: null,
-  userProfileData: [],
+  userData: [],
   trackId: undefined,
-  artistId: undefined,
-  recommendedSongsId: undefined,
-  recommendedArtistsId: undefined,
+  recommendedSavedSongsId: undefined, // For savedSongs-based songs recommendations
+  recommendedPlaylistSongsId: undefined, // For playlist-based songs recommendations
+  userImage: undefined,
+  userName: undefined,
+  recommendedPlaylistArtistsId: null, // For playlist-based artists recommendations
+  recommendedFollowedArtistsId: null, // For followed-artists based artists recommendations
 };
 
 export const spotifySlice = createSlice({
@@ -17,19 +20,28 @@ export const spotifySlice = createSlice({
       state.token = action.payload;
     },
     setUserData: (state, action) => {
-      state.userProfileData = action.payload;
+      state.userData = action.payload;
     },
     setTrackId: (state, action) => {
       state.trackId = action.payload;
     },
-    setArtistId: (state, action) => {
-      state.artistId = action.payload;
+    setRecommendedSavedSongsId: (state, action) => {
+      state.recommendedSavedSongsId = action.payload;
     },
-    setRecommendedSongsId: (state, action) => {
-      state.recommendedSongsId = action.payload;
+    setRecommendedPlaylistSongsId: (state, action) => {
+      state.recommendedPlaylistSongsId = action.payload;
     },
-    setRecommendedArtistsId: (state, action) => {
-      state.recommendedArtistsId = action.payload;
+    setUserImage: (state, action) => {
+      state.userImage = action.payload;
+    },
+    setUserName: (state, action) => {
+      state.userName = action.payload;
+    },
+    setRecommendedPlaylistArtistsId: (state, action) => {
+      state.recommendedPlaylistArtistsId = action.payload;
+    },
+    setRecommendedFollowedArtistsId: (state, action) => {
+      state.recommendedFollowedArtistsId = action.payload;
     },
   },
 });
@@ -39,8 +51,13 @@ export const {
   setUserData,
   setTrackId,
   setArtistId,
-  setRecommendedSongsId,
+  setRecommendedSavedSongsId,
+  setRecommendedPlaylistSongsId,
   setRecommendedArtistsId,
+  setUserImage,
+  setUserName,
+  setRecommendedPlaylistArtistsId,
+  setRecommendedFollowedArtistsId,
 } = spotifySlice.actions;
 
 export default spotifySlice.reducer;

@@ -1,11 +1,15 @@
-import { Music, Artists } from "./index";
+import HeaderLinks from "../components/HeaderLinks";
+import { RecommendedArtists, RecommendedMusic } from "./index";
 
 const Home = () => {
   return (
-    <div className="px-8 py-10">
-      <Music />
-      <Artists />
-    </div>
+    <>
+      <HeaderLinks />
+      <div className="px-8 py-10">
+        <RecommendedMusic />
+        <RecommendedArtists />
+      </div>
+    </>
   );
 };
 

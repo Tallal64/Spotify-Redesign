@@ -1,35 +1,19 @@
 import { useEffect } from "react";
-import { FaRegBell } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
+import { PiBell, PiGear, PiUsers } from "react-icons/pi";
 import { TfiArrowLeft, TfiArrowRight } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { setUserData } from "../redux/feature/spotifySlice";
-import { useGetCurrentUserProfileDataQuery } from "../redux/services/spotify";
+import {
+  setUserData,
+  setUserImage,
+  setUserName,
+} from "../redux/feature/spotifySlice";
+import { useGetCurrentUserDataQuery } from "../redux/services/spotify";
 
 const Header = () => {
-  const userProfileData = useSelector((state) => state.spotify.userProfileData);
+  const userData = useSelector((state) => state.spotify.userData);
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useGetCurrentUserProfileDataQuery();
-
-  const navLinks = [
-    {
-      to: "home/music",
-      title: "Music",
-    },
-    {
-      to: "home/audiobooks",
-      title: "Audiobooks",
-    },
-    {
-      to: "home/artists",
-      title: "Artists",
-    },
-    {
-      to: "home/albums",
-      title: "Albums",
-    },
-  ];
+  const { data, error, isLoading } = useGetCurrentUserDataQuery();
 
   useEffect(() => {
     if (error) {
@@ -41,13 +25,14 @@ const Header = () => {
       );
     } else if (data) {
       // console.log(data);
-      dispatch(setUserData(userProfileData));
+      dispatch(setUserData(userData));
+      dispatch(setUserImage(data.images[0]?.url));
+      dispatch(setUserName(data.display_name));
     }
-  }, [data, dispatch, error, isLoading, userProfileData]);
+  }, [data, dispatch, error, isLoading, userData]);
 
   return (
-    <div className="bg-Accent-800 pt-7 px-8">
-      {/* upperHeader */}
+    <div className="bg-Accent-800 py-7 px-8">
       <div className="flex justify-between items-center">
         <div className="w-full">
           <div className="flex items-center gap-x-7">
@@ -77,11 +62,19 @@ const Header = () => {
 
         {/*  */}
         <div className="flex items-center justify-end w-full">
-          <button>
-            <FaRegBell size={20} />
-          </button>
+          <div className="flex items-center gap-x-3">
+            <button>
+              <PiBell size={21} />
+            </button>
+            <button>
+              <PiGear size={21} />
+            </button>
+            <button>
+              <PiUsers size={24} />
+            </button>
+          </div>
 
-          <div className="h-6 w-[1px] mx-4 bg-foreground" />
+          <div className="h-6 w-[1px] mx-4 bg-foreground/50" />
 
           {/* proifle */}
           <>
@@ -92,37 +85,26 @@ const Header = () => {
             ) : data ? (
               <div className="flex items-center">
                 <span className="mr-2 font-medium">{data.display_name}</span>
-                <div className="h-11 w-11 overflow-hidden rounded-full">
-                  <img
-                    className="h-full w-full object-cover"
-                    src={data.images[1].url}
-                    alt="image"
-                  />
-                </div>
+                {data.images && data.images.length > 0 ? (
+                  <div className="h-10 w-10 overflow-hidden rounded-full">
+                    <img
+                      className="h-full w-full object-cover"
+                      src={data.images[1]?.url || data.images[0]?.url}
+                      alt="Profile"
+                    />
+                  </div>
+                ) : (
+                  <div className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-500 text-white">
+                    <span className="font-semibold">
+                      {data.display_name.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                )}
               </div>
             ) : null}
           </>
         </div>
       </div>
-
-      {/* lowerHeader */}
-      <ul className="flex ml-2">
-        {navLinks.map((link, index) => (
-          <NavLink
-            key={index}
-            to={link.to}
-            className={({ isActive }) =>
-              `${
-                isActive
-                  ? "border-Accent text-Neutrals-50 transition-all duration-500"
-                  : "border-transparent text-Neutrals-300"
-              } border-b-[3px] mt-8 font-medium px-6 mx-2 py-4`
-            }
-          >
-            {link.title}
-          </NavLink>
-        ))}
-      </ul>
     </div>
   );
 };

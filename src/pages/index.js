@@ -1,9 +1,15 @@
-import Artists from "./Artists";
-import Discover from "./Discover.jsx";
+import FollowedArtists from "./FollowedArtists.jsx";
 import Home from "./Home.jsx";
-import LikedSongs from "./LikedSongs.jsx";
 import Login from "./Login.jsx";
-import Music from "./Music";
+import RecommendedArtists from "./RecommendedArtists.jsx";
+import RecommendedMusic from "./RecommendedMusic.jsx";
+import SavedSongs from "./SavedSongs.jsx";
 
-export { Artists, Discover, Home, LikedSongs, Login, Music };
-
+export {
+  FollowedArtists,
+  Home,
+  Login,
+  RecommendedArtists,
+  RecommendedMusic,
+  SavedSongs,
+};

@@ -1,18 +1,21 @@
+/* eslint-disable no-unused-vars */
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
-import { GoHomeFill } from "react-icons/go";
-import { TbWorldSearch } from "react-icons/tb";
-import { TiHeartFullOutline } from "react-icons/ti";
+import { PiHouseBold, PiMusicNoteBold, PiUserCheckBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import {
-  setRecommendedArtistsId,
-  setRecommendedSongsId,
+  setRecommendedFollowedArtistsId,
+  setRecommendedPlaylistArtistsId,
+  setRecommendedPlaylistSongsId,
   setTrackId,
 } from "../redux/feature/spotifySlice";
 import {
+  useGetBrowseCategoriesQuery,
+  useGetCurrentUserFollowedArtistsQuery,
   useGetCurrentUserPlaylistQuery,
   useGetTrackFromPlaylistQuery,
+  useGetUserSavedSongsQuery,
 } from "../redux/services/spotify";
 import logo from "/Spotify_Logo_RGB_White.png";
 
@@ -20,31 +23,52 @@ const Sidebar = () => {
   const [playlists, setPlaylists] = useState([]);
   const trackId = useSelector((state) => state.spotify.trackId);
   const dispatch = useDispatch();
+  const [artists, setArtists] = useState([]);
 
   const {
     data: playlistData,
-    error,
-    isLoading,
+    error: playlistError,
+    isLoading: playlistLoading,
   } = useGetCurrentUserPlaylistQuery();
   const {
     data: trackData,
     error: trackError,
     isLoading: trackLoading,
-  } = useGetTrackFromPlaylistQuery(trackId, { skip: !trackId }); // skip is a built-in property in redux-toolkit, Skip fetching if trackId is not available.
+  } = useGetTrackFromPlaylistQuery(trackId, { skip: !trackId });
+  const {
+    data: savedSongsData,
+    error: savedSongsError,
+    isLoading: savedSongsLoading,
+  } = useGetUserSavedSongsQuery();
+  const {
+    data: CategoriesData,
+    error: CategoriesError,
+    isLoading: CategoriesLoading,
+  } = useGetBrowseCategoriesQuery();
+  const {
+    data: followedArtistData,
+    error: followedArtistError,
+    isLoading: followedArtistLoading,
+  } = useGetCurrentUserFollowedArtistsQuery();
 
   const links = [
-    { id: nanoid(), to: "/home", text: "Home", icon: <GoHomeFill size={21} /> },
     {
       id: nanoid(),
-      to: "/discover",
-      text: "Discover",
-      icon: <TbWorldSearch size={21} />,
+      to: "/home",
+      text: "Home",
+      icon: <PiHouseBold size={20} />,
     },
     {
       id: nanoid(),
-      to: "/liked",
-      text: "Liked Songs",
-      icon: <TiHeartFullOutline size={21} />,
+      to: "/followed",
+      text: "Followed Artists",
+      icon: <PiUserCheckBold size={20} />,
+    },
+    {
+      id: nanoid(),
+      to: "/saved",
+      text: "Saved Songs",
+      icon: <PiMusicNoteBold size={20} />,
     },
   ];
 
@@ -63,22 +87,38 @@ const Sidebar = () => {
      ~~~~~ This is for getting the Ids from each playlist then select a random id among them and set that specific id for "trackId":>redux>spotifySlice.js ~~~~~ 
   */
   useEffect(() => {
-    if (error) {
-      console.error(
-        "Error while fetching playlist data inside sidebar:",
-        error
-      );
-    } else if (isLoading) {
-      console.log("Fetching the playlist data inside sidebar...");
-    } else if (playlistData) {
-      setPlaylists(playlistData.items);
-      const urls = playlistData.items.map((item) => item.tracks.href); // getting links from playlist for tracks ids
-      const parts = urls.map((url) => url.split("/")); // spliting each link to get the track id
-      const playlistId = parts.map((item) => item[5]); // getting the ids of each track
-      let randomIdForTrackId = getRandomElements(playlistId, 1).join(""); // selecting random ids
-      dispatch(setTrackId(randomIdForTrackId)); // setting the id for "trackId":>redux>spotifySlice.js
+    if (playlistError) {
+      console.error("Error while fetching playlist data:", playlistError);
+      return;
     }
-  }, [playlistData, error, isLoading, dispatch]);
+    if (playlistLoading) {
+      console.log("Fetching playlist data...");
+      return;
+    }
+    if (playlistData?.items?.length > 0) {
+      setPlaylists(playlistData.items);
+      const playlistIds = playlistData.items.map((item) => item.id);
+      const randomTrackId = getRandomElements(playlistIds, 1)[0];
+      dispatch(setTrackId(randomTrackId));
+      // console.log('suiii: ',randomTrackId);
+    } else if (savedSongsData?.items?.length > 0) {
+      console.log("No playlists found, loading saved songs...");
+      const songIds = savedSongsData.items.map((item) => item.track.id);
+      const randomSongIds = getRandomElements(songIds, 5).join(",");
+      dispatch(setRecommendedPlaylistSongsId(randomSongIds));
+
+      // console.log("suiiiii: ", savedSongsData);
+    } else {
+      console.log("Data fetch failed or no data available.");
+    }
+  }, [
+    playlistData,
+    playlistError,
+    playlistLoading,
+    savedSongsData,
+    CategoriesData,
+    dispatch,
+  ]);
 
   /*
      ~~~~~ After setting "trackId" we will get tracks Data and each track has it's own id, this will get all the track Ids and select the random one then set that id for "recommededSongsId":>redux>spotifySlice.js ~~~~~ 
@@ -89,22 +129,56 @@ const Sidebar = () => {
     } else if (trackLoading) {
       console.log("Fetching the tracks...", trackLoading);
     } else if (trackData) {
-      const ids = trackData.items.map((item) => item.track.id); // change it to dynamic
-      let randomIdForRecommendedSongs = getRandomElements(ids, 5).join(",");
-      dispatch(setRecommendedSongsId(randomIdForRecommendedSongs));
+      console.log("track Data inside sidebar...", trackData);
+      const ids = trackData.items.map((item) => item.track.id);
+      const randomIdForRecommendedSongs = getRandomElements(ids, 5).join(",");
+      dispatch(setRecommendedPlaylistSongsId(randomIdForRecommendedSongs));
+      // console.log("temporary",randomIdForRecommendedSongs);
 
-      let idOfArtist = trackData.items.map((item) =>
+      const idOfArtist = trackData.items.map((item) =>
         item.track.artists.map((artist) => artist.id)
       );
-      let randomId = idOfArtist.map((item) => item[0]);
-      let randomIdForRecommendedArtists = getRandomElements(randomId, 1);
-      dispatch(setRecommendedArtistsId(randomIdForRecommendedArtists));
-      // console.log("tajarba", randomIdForRecommendedArtists);
+      const randomId = idOfArtist.map((item) => item[0]);
+      const randomIdForRecommendedArtists = getRandomElements(randomId, 1);
+      dispatch(setRecommendedPlaylistArtistsId(randomIdForRecommendedArtists)); // Dispatching to the separate state
     }
   }, [trackData, trackError, trackLoading, dispatch]);
 
+  // for followed artists
+  useEffect(() => {
+    if (followedArtistError) {
+      console.error(
+        "Error while fetching data of FollowedArtists inside sidebar:",
+        followedArtistError
+      );
+    } else if (followedArtistLoading) {
+      console.log(
+        "Fetching the data of FollowedArtists inside sidebar...",
+        followedArtistLoading
+      );
+    } else if (followedArtistData) {
+      setArtists(followedArtistData.artists.items);
+      let idForRecommendedArtists = followedArtistData.artists.items.map(
+        (item) => item.id
+      );
+      let randomArtistIds = getRandomElements(idForRecommendedArtists, 1).join(
+        ","
+      );
+      console.log(
+        "generated id for recommendedArtists in sidebar.jsx: ",
+        randomArtistIds
+      );
+      dispatch(setRecommendedFollowedArtistsId(randomArtistIds));
+    }
+  }, [
+    followedArtistData,
+    followedArtistError,
+    followedArtistLoading,
+    dispatch,
+  ]);
+
   return (
-    <div className="w-[300px] h-screen p-6 flex flex-col gap-y-10 bg-sidebar text-white">
+    <div className="max-w-[300px] min-h-screen p-6 flex flex-col gap-y-10 bg-sidebar text-white">
       {/* logo */}
       <div>
         <Link to={"/"}>
@@ -137,13 +211,13 @@ const Sidebar = () => {
         <h2 className="uppercase font-semibold tracking-wider mb-5">
           your playlists
         </h2>
-        {error ? (
+        {playlistError ? (
           <>
             <p className="capitalize text-red-500">
               Oh no, there was an error while fetching the data!
             </p>
           </>
-        ) : isLoading ? (
+        ) : playlistLoading ? (
           <>
             <p className="capitalize text-Neutrals-300">Loading...</p>
           </>
