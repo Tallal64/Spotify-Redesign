@@ -23,7 +23,6 @@ const RecommendedMusic = () => {
     recommendedSongsId,
     { skip: !recommendedSongsId }
   );
-
   const {
     data: CategoriesData,
     error: CategoriesError,
@@ -48,6 +47,7 @@ const RecommendedMusic = () => {
       // console.log(data);
     }
   }, [data, error, isLoading]);
+  console.log("RecommendedMusic", trackData);
 
   useEffect(() => {
     if (CategoriesError) {

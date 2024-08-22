@@ -8,6 +8,7 @@ import {
   setRecommendedFollowedArtistsId,
   setRecommendedPlaylistArtistsId,
   setRecommendedPlaylistSongsId,
+  setRecommendedSavedSongsId,
   setTrackId,
 } from "../redux/feature/spotifySlice";
 import {
@@ -100,13 +101,13 @@ const Sidebar = () => {
       const playlistIds = playlistData.items.map((item) => item.id);
       const randomTrackId = getRandomElements(playlistIds, 1)[0];
       dispatch(setTrackId(randomTrackId));
-      // console.log('suiii: ',randomTrackId);
+      console.log("suiii: ", playlistData);
     } else if (savedSongsData?.items?.length > 0) {
       console.log("No playlists found, loading saved songs...");
       const songIds = savedSongsData.items.map((item) => item.track.id);
       const randomSongIds = getRandomElements(songIds, 5).join(",");
       dispatch(setRecommendedPlaylistSongsId(randomSongIds));
-
+      console.log("songsid", randomSongIds);
       // console.log("suiiiii: ", savedSongsData);
     } else {
       console.log("Data fetch failed or no data available.");
@@ -119,6 +120,24 @@ const Sidebar = () => {
     CategoriesData,
     dispatch,
   ]);
+
+  useEffect(() => {
+    if (savedSongsError) {
+      console.error("Error while fetching savedSongs data:", savedSongsError);
+      return;
+    }
+    if (savedSongsLoading) {
+      console.log("Fetching savedSongs data...", savedSongsLoading);
+      return;
+    } else if (savedSongsData?.items?.length > 0) {
+      // console.log("saved songs...");
+      const songIds = savedSongsData.items.map((item) => item.track.id);
+      const randomSongIds = getRandomElements(songIds, 5).join(",");
+      dispatch(setRecommendedSavedSongsId(randomSongIds));
+      // console.log("songsid", randomSongIds);
+      // console.log("suiiiii: ", savedSongsData);
+    }
+  }, [savedSongsData, savedSongsError, savedSongsLoading, dispatch]);
 
   /*
      ~~~~~ After setting "trackId" we will get tracks Data and each track has it's own id, this will get all the track Ids and select the random one then set that id for "recommededSongsId":>redux>spotifySlice.js ~~~~~ 

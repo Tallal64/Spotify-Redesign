@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import FollowedArtist from "../components/followedArtist/FollowedArtist";
 import FollowedArtistSkeleton from "../components/skeletons/FollowedArtistSkeleton";
 import { setRecommendedFollowedArtistsId } from "../redux/feature/spotifySlice";
@@ -9,9 +9,6 @@ const FollowedArtists = () => {
   const { data, error, isLoading } = useGetCurrentUserFollowedArtistsQuery();
   const [artists, setArtists] = useState([]);
   const dispatch = useDispatch();
-  const recommendedFollowedArtistsId = useSelector(
-    (state) => state.spotify.recommendedFollowedArtistsId
-  );
 
   // for generating random elements
   const getRandomElements = (array, n) => {
@@ -29,19 +26,14 @@ const FollowedArtists = () => {
       console.log("Fetching the data inside FollowedArtists...", isLoading);
     } else if (data) {
       setArtists(data.artists.items);
-      if (!recommendedFollowedArtistsId) {
-        const idForRecommendedArtists = data.artists.items.map(
-          (item) => item.id
-        );
-        const randomArtistIds = getRandomElements(
-          idForRecommendedArtists,
-          1
-        ).join(",");
-        dispatch(setRecommendedFollowedArtistsId(randomArtistIds));
-      }
+      const idForRecommendedArtists = data.artists.items.map((item) => item.id);
+      const randomArtistIds = getRandomElements(
+        idForRecommendedArtists,
+        1
+      ).join(",");
+      dispatch(setRecommendedFollowedArtistsId(randomArtistIds));
     }
-  }, [data, error, isLoading, dispatch, recommendedFollowedArtistsId]);
-  console.log("recommendedFollowedArtistsId: ", recommendedFollowedArtistsId);
+  }, [data, error, isLoading, dispatch]);
 
   return (
     <div className="px-8 py-10">

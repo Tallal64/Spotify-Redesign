@@ -25,7 +25,7 @@ export const spotifyApi = createApi({
     }),
     getRecommendedSongs: builder.query({
       query: (recommendedSongsId) =>
-        `recommendations?limit=5&seed_tracks=${recommendedSongsId}`,
+        `recommendations?seed_tracks=${recommendedSongsId}`,
     }),
     getRecommendedArtists: builder.query({
       query: (recommendedArtistsId) =>

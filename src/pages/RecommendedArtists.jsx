@@ -14,6 +14,9 @@ const RecommendedArtists = () => {
     (state) => state.spotify.recommendedFollowedArtistsId
   );
 
+  console.log("recommendedPlaylistArtistsId", recommendedPlaylistArtistsId);
+  console.log("recommendedFollowedArtistsId", recommendedFollowedArtistsId);
+
   const {
     data,
     error: artistsError,
@@ -37,10 +40,10 @@ const RecommendedArtists = () => {
       console.log("Fetching the artistsData...", artistsLoading);
     } else if (data) {
       setArtistsData(data.artists);
-      console.log(
-        "tajarba filhal inside artists: ",
-        data.artists.map((artist) => artist)
-      );
+      // console.log(
+      //   "tajarba filhal inside artists: ",
+      //   data.artists.map((artist) => artist)
+      // );
     }
   }, [data, artistsError, artistsLoading, artistsData]);
   console.log("recommendedArtists: ", artistsData);

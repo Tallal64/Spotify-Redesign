@@ -15,6 +15,10 @@ const SavedSongs = () => {
   const { data, error, isLoading } = useGetUserSavedSongsQuery();
   const dispatch = useDispatch();
 
+  const recommendedFollowedArtistsId = useSelector(
+    (state) => state.spotify.recommendedFollowedArtistsId
+  );
+
   /*
      ~~~~~ function for generating random items/ids from an array ~~~~~ 
   */
@@ -36,11 +40,14 @@ const SavedSongs = () => {
       setTotalSongs(data.total);
 
       let Ids = data.items.map((item) => item.track.id);
-      let randomIdsFromFunc = getRandomElements(Ids, 5);
+      let randomIdsFromFunc = getRandomElements(Ids, 5).join(",");
       dispatch(setRecommendedSavedSongsId(randomIdsFromFunc));
-      // console.log("all hail: ", data);
+    } else {
+      console.log("No saved songs available.");
     }
   }, [data, error, isLoading, dispatch]);
+  console.log("all hail: ", savedSongs);
+  console.log("recommendedFollowedArtistsId: ", recommendedFollowedArtistsId);
 
   return (
     <div className="relative">
