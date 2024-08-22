@@ -31,12 +31,12 @@ const RecommendedMusic = () => {
   } = useGetBrowseCategoriesQuery();
 
   useEffect(() => {
-    if (recommendedPlaylistSongsId) {
-      setRecommendedSongsId(recommendedPlaylistSongsId);
-    } else if (recommendedSavedSongsId) {
+    if (recommendedSavedSongsId) {
       setRecommendedSongsId(recommendedSavedSongsId);
+    } else if (recommendedPlaylistSongsId) {
+      setRecommendedSongsId(recommendedPlaylistSongsId);
     }
-  }, [recommendedPlaylistSongsId, recommendedSavedSongsId]);
+  }, [recommendedSavedSongsId, recommendedPlaylistSongsId]);
 
   useEffect(() => {
     if (error) {

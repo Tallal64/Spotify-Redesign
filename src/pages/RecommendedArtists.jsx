@@ -23,12 +23,12 @@ const RecommendedArtists = () => {
   });
 
   useEffect(() => {
-    if (recommendedPlaylistArtistsId) {
-      setRecommendedArtistsId(recommendedPlaylistArtistsId);
-    } else if (recommendedFollowedArtistsId) {
+    if (recommendedFollowedArtistsId) {
       setRecommendedArtistsId(recommendedFollowedArtistsId);
+    } else if (recommendedPlaylistArtistsId) {
+      setRecommendedArtistsId(recommendedPlaylistArtistsId);
     }
-  }, [recommendedPlaylistArtistsId, recommendedFollowedArtistsId]);
+  }, [recommendedFollowedArtistsId, recommendedPlaylistArtistsId]);
 
   useEffect(() => {
     if (artistsError) {
