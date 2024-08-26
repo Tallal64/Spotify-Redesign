@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CtaItem } from "../components";
+import Heading from "../components/Heading";
 import CtaItemSkeleton from "../components/skeletons/CtaItemSkeleton";
 import { useGetRecommendedArtistsQuery } from "../redux/services/spotify";
+import { nanoid } from "@reduxjs/toolkit";
 
 const RecommendedArtists = () => {
   const [recommendedArtistsId, setRecommendedArtistsId] = useState("");
@@ -49,7 +51,7 @@ const RecommendedArtists = () => {
   console.log("recommendedArtists: ", artistsData);
 
   return (
-    <div className="overflow-hidden pb-12">
+    <div className="overflow-hidden pb-10">
       {artistsError ? (
         <>Oh no, there was an error</>
       ) : artistsLoading ? (
@@ -58,15 +60,14 @@ const RecommendedArtists = () => {
         </div>
       ) : artistsData.length > 0 ? (
         <>
-          <h2 className="mb-5 font-semibold text-2xl capitalize">
-            <span className="hover:underline cursor-pointer">
-              Artists you might like
-            </span>
-          </h2>
+          <Heading
+            title={"Artists you might like"}
+            className={"hover:underline cursor-pointer"}
+          />
           <div className="flex gap-5 justify-between items-center">
-            {artistsData.map((item, index) => (
+            {artistsData.map((item) => (
               <CtaItem
-                key={index}
+                key={nanoid()}
                 title={item?.name}
                 img={item.images[0].url}
                 desc={item.type}
@@ -74,8 +75,7 @@ const RecommendedArtists = () => {
             ))}
           </div>
         </>
-      ) : // <p>data not found inside &#34;Artists.jsx&#34;</p>
-      null}
+      ) : null}
     </div>
   );
 };

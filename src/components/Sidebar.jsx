@@ -5,6 +5,7 @@ import { PiHouseBold, PiMusicNoteBold, PiUserCheckBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import {
+  setPlaylistId,
   setRecommendedFollowedArtistsId,
   setRecommendedPlaylistArtistsId,
   setRecommendedPlaylistSongsId,
@@ -19,6 +20,7 @@ import {
   useGetUserSavedSongsQuery,
 } from "../redux/services/spotify";
 import logo from "/Spotify_Logo_RGB_White.png";
+import PlaylistSkeleton from "./skeletons/PlaylistSkeleton";
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState([]);
@@ -55,7 +57,7 @@ const Sidebar = () => {
   const links = [
     {
       id: nanoid(),
-      to: "/home",
+      to: "/",
       text: "Home",
       icon: <PiHouseBold size={20} />,
     },
@@ -197,7 +199,7 @@ const Sidebar = () => {
   ]);
 
   return (
-    <div className="max-w-[300px] min-h-screen p-6 flex flex-col gap-y-10 bg-sidebar text-white">
+    <div className="max-w-[320px] min-h-screen p-6 flex flex-col gap-y-10 bg-sidebar text-white">
       {/* logo */}
       <div>
         <Link to={"/"}>
@@ -238,7 +240,7 @@ const Sidebar = () => {
           </>
         ) : playlistLoading ? (
           <>
-            <p className="capitalize text-Neutrals-300">Loading...</p>
+            <PlaylistSkeleton count={8} />
           </>
         ) : playlistData ? (
           <div>
@@ -249,11 +251,15 @@ const Sidebar = () => {
                   className="list-none flex cursor-pointer items-center"
                 >
                   <NavLink
+                    to={`/playlist/${item.id}`}
                     className={({ isActive }) =>
                       `${
                         isActive ? "text-Neutrals-50" : "text-Neutrals-300"
                       } flex flex-col w-full py-2 px-5 hover:bg-[#33333366] rounded-[30px]`
                     }
+                    onClick={() => {
+                      dispatch(setPlaylistId(item.id));
+                    }}
                   >
                     <p className="font-medium overflow-hidden text-ellipsis whitespace-nowrap">
                       {item.name}

@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: null,
-  userData: [],
+  CurrentUserData: [],
+  userId: undefined,
+  playlistId: undefined,
   trackId: undefined,
   recommendedSavedSongsId: undefined, // For savedSongs-based songs recommendations
   recommendedPlaylistSongsId: undefined, // For playlist-based songs recommendations
@@ -19,8 +21,14 @@ export const spotifySlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
-    setUserData: (state, action) => {
-      state.userData = action.payload;
+    setCurrentUserData: (state, action) => {
+      state.CurrentUserData = action.payload;
+    },
+    setUserId: (state, action) => {
+      state.userId = action.payload;
+    },
+    setPlaylistId: (state, action) => {
+      state.playlistId = action.payload;
     },
     setTrackId: (state, action) => {
       state.trackId = action.payload;
@@ -48,7 +56,9 @@ export const spotifySlice = createSlice({
 
 export const {
   setToken,
-  setUserData,
+  setCurrentUserData,
+  setUserId,
+  setPlaylistId,
   setTrackId,
   setArtistId,
   setRecommendedSavedSongsId,

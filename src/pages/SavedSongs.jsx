@@ -6,6 +6,7 @@ import BannerSkeleton from "../components/skeletons/BannerSkeleton";
 import PlayerItemSkeleton from "../components/skeletons/PlayerItemSkeleton";
 import { setRecommendedSavedSongsId } from "../redux/feature/spotifySlice";
 import { useGetUserSavedSongsQuery } from "../redux/services/spotify";
+import TracksHeading from "../components/TracksHeading";
 
 const SavedSongs = () => {
   const [savedSongs, setSavedSongs] = useState([]);
@@ -50,9 +51,9 @@ const SavedSongs = () => {
   console.log("recommendedFollowedArtistsId: ", recommendedFollowedArtistsId);
 
   return (
-    <div className="relative">
+    <div className="">
       {/* decoration */}
-      <div>
+      <div className="">
         {error ? (
           <>Oh no, there was an error</>
         ) : isLoading ? (
@@ -75,27 +76,9 @@ const SavedSongs = () => {
         ) : null}
       </div>
 
-      <div className="px-8 h-screen relative bg-black/25 -mt-[300px] z-10">
+      <div className="h-screen px-8 relative bg-black/25 -mt-[300px] z-10">
         {/* songs headers */}
-        <div className="flex items-center gap-x-3 py-2 justify-between w-full px-2 text-sm text-white/55">
-          <p className="p-3">#</p>
-
-          <div className="w-[540px] max-w-[540px] flex items-center justify-between gap-x-3">
-            <p className="w-full">Title</p>
-          </div>
-
-          <div className="flex flex-grow gap-x-4 ml-5 justify-between">
-            <p className="flex items-center p-2 w-[600px] max-w-[600px]">
-              Album
-            </p>
-            <p className="flex items-center justify-end p-2 w-1/2">
-              Release Date
-            </p>
-            <p className="flex items-center justify-end p-2 w-1/2 ">Duration</p>
-          </div>
-        </div>
-
-        <div className="h-[1px] w-full bg-Neutrals-700 mb-5" />
+        <TracksHeading />
 
         {/* songs */}
         <div>

@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
+import { nanoid } from "@reduxjs/toolkit";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const CategoriesSkeleton = ({ count }) => {
   return (
     <SkeletonTheme baseColor="#fff3" highlightColor="#444">
-      {[...Array(count).keys()].map((_, index) => (
+      {[...Array(count).keys()].map(() => (
         <div
-          key={index}
+          key={nanoid()}
           className="relative overflow-hidden rounded-lg max-h-[166px] min-h-[165px] min-w-[289px] max-w-[290px]"
         >
           {/* Skeleton for the title */}

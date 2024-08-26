@@ -6,24 +6,46 @@ import {
   PiShuffleBold,
 } from "react-icons/pi";
 
-const Banner = ({ playlistType, title, img, userName, total, className }) => {
+const Banner = ({
+  playlistType,
+  playlistCoverImage,
+  title,
+  img,
+  userName,
+  total,
+  className,
+  desc,
+}) => {
   const getInitials = (name) => {
     return name.charAt(0).toUpperCase();
   };
 
   return (
-    <div className={`px-8 w-full p-7 ${className}`}>
+    <div className={`px-8 w-full p-7 ${className} overflow-hidden`}>
       {/* upper div */}
       <div className="flex items-end gap-x-6">
-        <div className="h-72 w-72 rounded-lg flex items-center justify-center bg-gradient-to-br from-[#2cd76bb8] via-[#2cd76b9f] to-[#03150b]">
-          <PiMusicNotes size={180} />
-        </div>
+        {playlistCoverImage ? (
+          <div className="h-72 w-72 rounded-lg overflow-hidden">
+            <img
+              src={playlistCoverImage}
+              alt="playlistCoverImage"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="h-72 w-72 rounded-lg flex items-center justify-center bg-gradient-to-br from-[#2cd76bb8] via-[#2cd76b9f] to-[#03150b]">
+            <PiMusicNotes size={180} />
+          </div>
+        )}
 
-        <div className="flex flex-col gap-y-2">
-          <p className="capitalize text-neutral-300">{playlistType}</p>
-          <h2 className="text-8xl font-bold capitalize tracking-tight">
-            {title}
-          </h2>
+        <div className="flex flex-col gap-y-3">
+          <div className="flex flex-col overflow-hidden">
+            <p className="capitalize text-neutral-300">{playlistType}</p>
+            <h2 className="py-3 text-8xl font-bold capitalize tracking-tight whitespace-nowrap truncate max-w-[1200px]">
+              {title}
+            </h2>
+            <p className="whitespace-nowrap truncate max-w-[1200px]">{desc}</p>
+          </div>
           <div className="flex items-center gap-x-2">
             <div className="h-8 w-8 rounded-full overflow-hidden flex items-center justify-center bg-gray-500 text-white">
               {img ? (

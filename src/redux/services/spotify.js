@@ -20,6 +20,9 @@ export const spotifyApi = createApi({
     getCurrentUserPlaylist: builder.query({
       query: () => `me/playlists/`,
     }),
+    getPlaylist: builder.query({
+      query: (playlistId) => `playlists/${playlistId}`,
+    }),
     getTrackFromPlaylist: builder.query({
       query: (trackId) => `playlists/${trackId}/tracks`, // this links is taken from playlist>tracks>id
     }),
@@ -37,6 +40,9 @@ export const spotifyApi = createApi({
     getUserSavedSongs: builder.query({
       query: () => `me/tracks?limit=50`,
     }),
+    getUserData: builder.query({
+      query: (userId) => `users/${userId}`,
+    }),
     getBrowseCategories: builder.query({
       query: () => `browse/categories`,
     }),
@@ -46,6 +52,7 @@ export const spotifyApi = createApi({
 export const {
   useGetCurrentUserDataQuery,
   useGetCurrentUserPlaylistQuery,
+  useGetPlaylistQuery,
   useGetTrackFromPlaylistQuery,
   useGetArtistFromTracksQuery,
   useGetRecommendedSongsQuery,
@@ -53,5 +60,6 @@ export const {
   useGetArtist,
   useGetCurrentUserFollowedArtistsQuery,
   useGetUserSavedSongsQuery,
+  useGetUserDataQuery,
   useGetBrowseCategoriesQuery,
 } = spotifyApi;

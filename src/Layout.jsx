@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { Login } from "./pages";
 import { setToken } from "./redux/feature/spotifySlice";
-import { Header, Sidebar } from "./components";
+import { Footer, Header, Sidebar } from "./components";
 
 function Layout() {
   const [profile, setProfile] = useState("");
@@ -62,16 +62,23 @@ function Layout() {
   return (
     <>
       {token ? (
-        <div className="">
-          <div className="absolute top-0 left-0 z-10">
-            <Sidebar />
+        <div className="w-screen h-screen overflow-hidden grid grid-rows-[85vh_15vh]">
+          <div className="grid grid-cols-[15vw_85vw] h-full w-full">
+            <div className="h-screen overflow-auto">
+              <Sidebar />
+            </div>
+            <div className="h-full w-full overflow-auto">
+              <div className="">
+                <Header />
+              </div>
+              <div className="h-screen bg-[#03150b]">
+                <Outlet />
+              </div>
+            </div>
           </div>
-          <div className="ml-[300px]">
-            <Header />
-          </div>
-          <div className="bg-[#03150b] min-h-screen ml-[300px]">
-            <Outlet />
-          </div>
+          {/* <div className="border">
+            <Footer />
+          </div> */}
         </div>
       ) : (
         <Login />

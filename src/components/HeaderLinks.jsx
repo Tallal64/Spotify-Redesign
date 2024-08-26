@@ -1,3 +1,4 @@
+import { nanoid } from "@reduxjs/toolkit";
 import { NavLink } from "react-router-dom";
 
 const HeaderLinks = () => {
@@ -23,9 +24,9 @@ const HeaderLinks = () => {
   return (
     <div className="bg-Accent-800">
       <ul className="flex ml-2">
-        {navLinks.map((link, index) => (
+        {navLinks.map((link) => (
           <NavLink
-            key={index}
+            key={nanoid()}
             to={link.to}
             className={({ isActive }) =>
               `${

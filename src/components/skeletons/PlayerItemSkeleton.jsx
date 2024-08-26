@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { nanoid } from "@reduxjs/toolkit";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -9,8 +10,8 @@ const PlayerItemSkeleton = ({ count }) => {
       highlightColor="#444"
       className="flex flex-col gap-3"
     >
-      {[...Array(count).keys()].map((_, index) => (
-        <div key={index} className="flex items-center gap-x-3">
+      {[...Array(count).keys()].map(() => (
+        <div key={nanoid()} className="flex items-center gap-x-3">
           <Skeleton
             circle={true}
             height={50}

@@ -4,7 +4,7 @@ import { PiBell, PiGear, PiUsers } from "react-icons/pi";
 import { TfiArrowLeft, TfiArrowRight } from "react-icons/tfi";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setUserData,
+  setCurrentUserData,
   setUserImage,
   setUserName,
 } from "../redux/feature/spotifySlice";
@@ -25,7 +25,7 @@ const Header = () => {
       );
     } else if (data) {
       // console.log(data);
-      dispatch(setUserData(userData));
+      dispatch(setCurrentUserData(userData));
       dispatch(setUserImage(data.images[0]?.url));
       dispatch(setUserName(data.display_name));
     }

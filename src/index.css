@@ -9,5 +9,5 @@
 }
 
 body {
-  @apply text-foreground bg-sidebar;
+  @apply text-foreground bg-[#03150b];
 }

@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
+import { nanoid } from "@reduxjs/toolkit";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const CtaItemSkeleton = ({ count }) => {
   return (
     <SkeletonTheme baseColor="#fff3" highlightColor="#444">
-      {[...Array(count).keys()].map((_, index) => (
+      {[...Array(count).keys()].map(() => (
         <div
-          key={index}
+          key={nanoid()}
           className="cursor-pointer flex p-[30px] rounded-[10px] bg-white/5 min-w-[430px] min-h-[147px] max-w-[430px] max-h-[147px]"
         >
           <div className="flex w-full gap-[30px]">

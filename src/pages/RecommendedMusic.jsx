@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CtaItem } from "../components";
+import Heading from "../components/Heading";
 import CategoriesSkeleton from "../components/skeletons/CategoriesSkeleton";
 import CtaItemSkeleton from "../components/skeletons/CtaItemSkeleton";
 import {
   useGetBrowseCategoriesQuery,
   useGetRecommendedSongsQuery,
 } from "../redux/services/spotify";
+import { nanoid } from "@reduxjs/toolkit";
 
 const RecommendedMusic = () => {
   const [recommendedSongsId, setRecommendedSongsId] = useState("");
@@ -62,7 +64,7 @@ const RecommendedMusic = () => {
 
   return (
     <>
-      <div className="overflow-hidden pb-12 flex flex-col gap-y-12">
+      <div className="overflow-hidden pb-10 flex flex-col gap-y-10">
         <div className="">
           {CategoriesError ? (
             <>Oh no, there was an error</>
@@ -72,15 +74,14 @@ const RecommendedMusic = () => {
             </div>
           ) : CategoriesData ? (
             <>
-              <h2 className="mb-5 font-semibold text-2xl capitalize">
-                <span className="hover:underline cursor-pointer">
-                  Browse categories
-                </span>
-              </h2>
+              <Heading
+                title={"Browse categories"}
+                className={"hover:underline cursor-pointer"}
+              />
               <div className="flex gap-5 justify-between items-center">
-                {categories.map((arr, index) => (
+                {categories.map((arr) => (
                   <CtaItem
-                    key={index}
+                    key={nanoid()}
                     title={arr.name}
                     img={arr.icons[0]?.url}
                     desc={"categories"}
@@ -98,15 +99,14 @@ const RecommendedMusic = () => {
             </div>
           ) : data ? (
             <>
-              <h2 className="mb-5 font-semibold text-2xl capitalize">
-                <span className="hover:underline cursor-pointer">
-                  Recommended Music
-                </span>
-              </h2>
+              <Heading
+                title={"Recommended Music"}
+                className={"hover:underline cursor-pointer"}
+              />
               <div className="flex gap-5 justify-between items-center">
-                {trackData.map((track, index) => (
+                {trackData.map((track) => (
                   <CtaItem
-                    key={index}
+                    key={nanoid()}
                     title={track.name}
                     img={track.album.images[0].url}
                     desc={track.artists.map((item) => item.name).join(", ")}
