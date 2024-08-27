@@ -9,27 +9,27 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Layout from "./Layout.jsx";
+
 import {
   Albums,
-  Audiobooks,
+  Artists,
   FollowedArtists,
   Home,
   Login,
+  Music,
   Playlist,
-  RecommendedArtists,
-  RecommendedMusic,
   SavedSongs,
 } from "./pages/index.js";
 import { store } from "./redux/store.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
-      <Route path="/" element={<Home />}>
-        <Route path=":id" element={<Audiobooks />} />
-        <Route path=":id" element={<RecommendedMusic />} />
-        <Route path=":id" element={<RecommendedArtists />} />
-        <Route path=":id" element={<Albums />} />
+    <Route element={<Layout />}>
+      <Route path="/">
+        <Route index element={<Home />} />
+        <Route path="albums" element={<Albums />} />
+        <Route path="artists" element={<Artists />} />
+        <Route path="music" element={<Music />} />
       </Route>
       <Route path="followed" element={<FollowedArtists />} />
       <Route path="saved" element={<SavedSongs />} />

@@ -1,12 +1,12 @@
-import { nanoid } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { CtaItem } from "../components";
-import Heading from "../components/Heading";
-import CtaItemSkeleton from "../components/skeletons/CtaItemSkeleton";
-import { useGetRecommendedArtistsQuery } from "../redux/services/spotify";
+import { useGetRecommendedArtistsQuery } from "../../redux/services/spotify";
+import { nanoid } from "@reduxjs/toolkit";
+import ArtistSkeleton from "../../components/skeletons/ArtistSkeleton";
+import ArtistComponent from "../../components/Artist/ArtistComponent";
+import Heading from "../../components/Heading";
 
-const RecommendedArtists = () => {
+const Artists = () => {
   const [recommendedArtistsId, setRecommendedArtistsId] = useState("");
   const [artistsData, setArtistsData] = useState([]);
   const recommendedPlaylistArtistsId = useSelector(
@@ -15,10 +15,6 @@ const RecommendedArtists = () => {
   const recommendedFollowedArtistsId = useSelector(
     (state) => state.spotify.recommendedFollowedArtistsId
   );
-
-  console.log("recommendedPlaylistArtistsId", recommendedPlaylistArtistsId);
-  console.log("recommendedFollowedArtistsId", recommendedFollowedArtistsId);
-
   const {
     data,
     error: artistsError,
@@ -26,7 +22,6 @@ const RecommendedArtists = () => {
   } = useGetRecommendedArtistsQuery(recommendedArtistsId, {
     skip: !recommendedArtistsId,
   });
-
   useEffect(() => {
     if (recommendedFollowedArtistsId) {
       setRecommendedArtistsId(recommendedFollowedArtistsId);
@@ -34,7 +29,6 @@ const RecommendedArtists = () => {
       setRecommendedArtistsId(recommendedPlaylistArtistsId);
     }
   }, [recommendedFollowedArtistsId, recommendedPlaylistArtistsId]);
-
   useEffect(() => {
     if (artistsError) {
       console.error("Error while fetching artistsData:", artistsError);
@@ -42,33 +36,27 @@ const RecommendedArtists = () => {
       console.log("Fetching the artistsData...", artistsLoading);
     } else if (data) {
       setArtistsData(data.artists);
-      // console.log(
-      //   "tajarba filhal inside artists: ",
-      //   data.artists.map((artist) => artist)
-      // );
     }
   }, [data, artistsError, artistsLoading, artistsData]);
-  console.log("recommendedArtists: ", artistsData);
-
   return (
-    <div className="overflow-hidden pb-10">
+    <div className="px-8 py-10">
       {artistsError ? (
         <>Oh no, there was an error</>
       ) : artistsLoading ? (
         <div className="flex gap-5 justify-between items-center">
-          <CtaItemSkeleton count={5} />
+          <ArtistSkeleton count={5} />
         </div>
       ) : artistsData.length > 0 ? (
         <>
           <Heading
-            link={"artists"}
-            showLink={true}
+            link={"#"}
+            showLink={false}
             title={"Artists you might like"}
-            className={"hover:underline cursor-pointer"}
+            className={""}
           />
-          <div className="flex gap-5 justify-between items-center">
+          <div className="grid grid-cols-7 gap-3">
             {artistsData.map((item) => (
-              <CtaItem
+              <ArtistComponent
                 key={nanoid()}
                 title={item?.name}
                 img={item.images[0].url}
@@ -82,4 +70,4 @@ const RecommendedArtists = () => {
   );
 };
 
-export default RecommendedArtists;
+export default Artists;

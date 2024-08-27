@@ -1,7 +1,12 @@
 import { useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
-import { PiBell, PiGear, PiUsers } from "react-icons/pi";
-import { TfiArrowLeft, TfiArrowRight } from "react-icons/tfi";
+import {
+  PiArrowLeft,
+  PiArrowRight,
+  PiBell,
+  PiGear,
+  PiUsers,
+} from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentUserData,
@@ -38,10 +43,10 @@ const Header = () => {
           <div className="flex items-center gap-x-7">
             <div className="flex gap-x-2.5">
               <button className="h-9 w-9 rounded-full flex items-center justify-center bg-Accent-850">
-                <TfiArrowLeft />
+                <PiArrowLeft size={21} />
               </button>
               <button className="h-9 w-9 rounded-full flex items-center justify-center bg-Accent-850">
-                <TfiArrowRight />
+                <PiArrowRight size={21} />
               </button>
             </div>
 

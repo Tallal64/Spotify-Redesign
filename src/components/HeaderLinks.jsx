@@ -8,10 +8,6 @@ const HeaderLinks = () => {
       title: "Music",
     },
     {
-      to: "audiobooks",
-      title: "Audiobooks",
-    },
-    {
       to: "artists",
       title: "Artists",
     },

@@ -1,11 +1,11 @@
+import { nanoid } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import FollowedArtist from "../components/followedArtist/FollowedArtist";
-import Heading from "../components/Heading";
-import FollowedArtistSkeleton from "../components/skeletons/FollowedArtistSkeleton";
 import { setRecommendedFollowedArtistsId } from "../redux/feature/spotifySlice";
 import { useGetCurrentUserFollowedArtistsQuery } from "../redux/services/spotify";
-import { nanoid } from "@reduxjs/toolkit";
+import Heading from "../components/Heading";
+import ArtistComponent from "../components/Artist/ArtistComponent";
+import ArtistSkeleton from "../components/skeletons/ArtistSkeleton";
 
 const FollowedArtists = () => {
   const { data, error, isLoading } = useGetCurrentUserFollowedArtistsQuery();
@@ -45,19 +45,21 @@ const FollowedArtists = () => {
           <>Oh no, there was an error</>
         ) : isLoading ? (
           <div className="flex flex-wrap w-full gap-3">
-            <FollowedArtistSkeleton count={20} />
+            <ArtistSkeleton count={20} />
           </div>
         ) : data ? (
           <>
             <Heading
-              title={"Followed Artists"}
-              className={"hover:cursor-pointer"}
+              link={"artists"}
+              showLink={false}
+              title={"Artists you might like"}
+              className={"hover:underline cursor-pointer"}
             />
 
             <div className="flex flex-wrap w-full gap-3">
               {artists.map((artist) => (
                 <div key={nanoid()} className="">
-                  <FollowedArtist
+                  <ArtistComponent
                     img={artist.images[1].url}
                     title={artist.name}
                     desc={artist.type}

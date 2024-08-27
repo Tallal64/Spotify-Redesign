@@ -9,7 +9,7 @@ const PlaylistSkeleton = ({ count }) => {
       {[...Array(count).keys()].map(() => (
         <div
           key={nanoid()}
-          className="flex flex-col gap-y-3 bg-[#33333366] rounded-[30px]"
+          className="flex flex-col gap-y-3 my-5 bg-[#33333366] rounded-[30px]"
         >
           <li className="list-none flex cursor-pointer items-center">
             <div className="flex flex-col w-full py-2 px-5 ">

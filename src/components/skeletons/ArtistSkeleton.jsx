@@ -3,7 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css"; // Import the default styles
 
-const FollowedArtistSkeleton = ({ count }) => {
+const ArtistSkeleton = ({ count }) => {
   return (
     <SkeletonTheme baseColor="#fff3" highlightColor="#444">
       {[...Array(count).keys()].map(() => (
@@ -24,4 +24,4 @@ const FollowedArtistSkeleton = ({ count }) => {
   );
 };
 
-export default FollowedArtistSkeleton;
+export default ArtistSkeleton;

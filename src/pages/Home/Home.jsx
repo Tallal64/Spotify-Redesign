@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
-import HeaderLinks from "../components/HeaderLinks";
-import { RecommendedArtists, RecommendedMusic } from "./index";
+import { RecommendedArtists, RecommendedMusic } from "../index";
 import cloudIcon from "/cloudy.png";
 
 const Home = () => {
@@ -8,7 +7,6 @@ const Home = () => {
 
   return (
     <>
-      <HeaderLinks />
       <div className="px-8 py-10">
         <div className="border pb-4 border-transparent mb-12 border-b-Neutrals-600">
           <div className="flex items-end">

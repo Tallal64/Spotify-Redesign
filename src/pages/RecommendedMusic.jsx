@@ -1,3 +1,4 @@
+import { nanoid } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { CtaItem } from "../components";
@@ -8,7 +9,6 @@ import {
   useGetBrowseCategoriesQuery,
   useGetRecommendedSongsQuery,
 } from "../redux/services/spotify";
-import { nanoid } from "@reduxjs/toolkit";
 
 const RecommendedMusic = () => {
   const [recommendedSongsId, setRecommendedSongsId] = useState("");
@@ -41,9 +41,12 @@ const RecommendedMusic = () => {
 
   useEffect(() => {
     if (error) {
-      console.error("Error while fetching data inside Music:", error);
+      console.error(
+        "Error while fetching data inside RecommendedMusic:",
+        error
+      );
     } else if (isLoading) {
-      console.log("Fetching the data inside Music...", isLoading);
+      console.log("Fetching the data inside RecommendedMusic...", isLoading);
     } else if (data) {
       setTrackData(data.tracks);
       // console.log(data);
@@ -100,6 +103,8 @@ const RecommendedMusic = () => {
           ) : data ? (
             <>
               <Heading
+                link={"music"}
+                showLink={true}
                 title={"Recommended Music"}
                 className={"hover:underline cursor-pointer"}
               />

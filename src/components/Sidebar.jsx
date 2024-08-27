@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { PiHouseBold, PiMusicNoteBold, PiUserCheckBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   setPlaylistId,
   setRecommendedFollowedArtistsId,
@@ -27,6 +27,7 @@ const Sidebar = () => {
   const trackId = useSelector((state) => state.spotify.trackId);
   const dispatch = useDispatch();
   const [artists, setArtists] = useState([]);
+  const location = useLocation();
 
   const {
     data: playlistData,
@@ -216,12 +217,25 @@ const Sidebar = () => {
               to={link.to}
               className={({ isActive }) =>
                 `flex items-center gap-x-2 rounded-[30px] font-medium py-2 px-5 transition-all hover:bg-[#33333366] ${
-                  isActive ? "text-Accent bg-[#33333366]" : "text-Neutrals-300"
+                  isActive ||
+                  (link.to === "/" &&
+                    (location.pathname.startsWith("/music") ||
+                      location.pathname.startsWith("/artists") ||
+                      location.pathname.startsWith("/albums")))
+                    ? "text-Accent bg-[#33333366]"
+                    : "text-Neutrals-300"
                 }`
               }
             >
               <span>{link.icon}</span>
-              <span className="text-Neutrals-300">{link.text}</span>
+              <NavLink
+                to={link.to}
+                className={({ isActive }) =>
+                  `${isActive ? "text-white" : "text-Neutrals-300"}`
+                }
+              >
+                {link.text}
+              </NavLink>
             </NavLink>
           </li>
         ))}
@@ -254,7 +268,7 @@ const Sidebar = () => {
                     to={`/playlist/${item.id}`}
                     className={({ isActive }) =>
                       `${
-                        isActive ? "text-Neutrals-50" : "text-Neutrals-300"
+                        isActive ? "text-Neutrals-50 bg-[#33333366]" : "text-Neutrals-300"
                       } flex flex-col w-full py-2 px-5 hover:bg-[#33333366] rounded-[30px]`
                     }
                     onClick={() => {
