@@ -596,6 +596,11 @@
     "@types/babel__core" "^7.20.5"
     react-refresh "^0.14.2"
 
+"@wavesurfer/react@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@wavesurfer/react/-/react-1.0.7.tgz#5bbb8fe8080f4478e896a32eeeb5ed111bbc4266"
+  integrity sha512-Bw2rd2zqVL1ERy8N9mciacbQW3N5Gn9oRjhq3kjqgtLeE8a1WSTU+4kU0E37541jf432eNZ8lNzuodFFSiNccw==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
@@ -2298,6 +2303,11 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
+react-audio-visualize@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/react-audio-visualize/-/react-audio-visualize-1.1.3.tgz#7bf06061cb8df91e289e4ff06f5a430f8c2ecc02"
+  integrity sha512-gvKcmyfJP6XQrzCJeEK4z/lBL/qijqWD6JArZBfaaf5ZxEQPMfQhTipG0LJIUcBYxzVO1rvIhj4ex+/5MRYTFA==
+
 react-dom@^18.3.1:
   version "18.3.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
@@ -2320,6 +2330,11 @@ react-loading-skeleton@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/react-loading-skeleton/-/react-loading-skeleton-3.4.0.tgz#c71a3a17259d08e4064974aa0b07f150a09dfd57"
   integrity sha512-1oJEBc9+wn7BbkQQk7YodlYEIjgeR+GrRjD+QXkVjwZN7LGIcAFHrx4NhT7UHGBxNY1+zax3c+Fo6XQM4R7CgA==
+
+react-range@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/react-range/-/react-range-1.10.0.tgz#20f56885bd39400084c91c2ae7f9375ed9b22fb5"
+  integrity sha512-kDo0LiBUHIQIP8menx0UoxTnHr7UXBYpIYl/DR9jCaO1o29VwvCLpkP/qOTNQz5hkJadPg1uEM07XJcJ1XGoKw==
 
 react-redux@^9.1.2:
   version "9.1.2"
@@ -2864,6 +2879,11 @@ vite@^5.3.4:
     rollup "^4.13.0"
   optionalDependencies:
     fsevents "~2.3.3"
+
+wavesurfer.js@^7.8.4:
+  version "7.8.4"
+  resolved "https://registry.yarnpkg.com/wavesurfer.js/-/wavesurfer.js-7.8.4.tgz#9a28f841102dd4019dca5c0bf01292ba4367800f"
+  integrity sha512-KhCCdts2sL/cjgsGWayvqTSagz55YauTvObzY5dgU9WXYddDUJ5rQwy/4MI/CNURfAjDL17kufOVbKgeIR5tZA==
 
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
